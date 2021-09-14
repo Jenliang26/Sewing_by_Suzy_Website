@@ -24,3 +24,11 @@ class Reviews(models.Model):
     date = models.DateField(null=True)
     number_rating = models.IntegerField('')
     comment = models.CharField(max_length=500)
+
+class Orders(models.Model):
+    customer = models.ForeignKey('')???
+    date = models.DateField(null=True)
+    notes = models.CharField(max_length=500)
+    status = ???
+
+
