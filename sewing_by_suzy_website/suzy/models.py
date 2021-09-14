@@ -18,3 +18,9 @@ class Inventory(models.Model):
     description = models.CharField(max_length=100)
     quantity = models.IntegerField(null = True)
     category = models.CharField(max_length=50)
+
+class Reviews(models.Model):
+    name = models.CharField(max_length=50)
+    date = models.DateField(null=True)
+    number_rating = models.IntegerField('')
+    comment = models.CharField(max_length=500)
