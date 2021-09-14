@@ -31,4 +31,8 @@ class Orders(models.Model):
     notes = models.CharField(max_length=500)
     status = ???
 
+class Garment(models.Model):
+    order = models.ForeignKey('')???
+    type = models.CharField(max_length=50)
+    quantity = models.IntegerField(null = True)
 
