@@ -6,34 +6,34 @@ from .models import User, Customer, Orders, Statuses, Garment, Inventory, Review
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name', 'role']
+        fields = ['id', 'name', 'role']
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['user', 'name', 'phone_number', 'email']
+        fields = ['id', 'user', 'name', 'phone_number', 'email']
 
 class OrdersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Orders
-        fields = ['customer', 'date', 'notes', 'status']
+        fields = ['id', 'customer', 'date', 'notes', 'status']
 
 class StatusesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statuses
-        fields = ['status']
+        fields = ['id', 'status']
 
 class GarmentSerializer(serializers.ModelSerializer):
     class Meta:
         models = Garment
-        fields = ['order', 'type', 'quantity']
+        fields = ['id', 'order', 'type', 'quantity']
 
 class InventorySerializer(serializers.ModelSerializer):
     class Meta:
         models = Inventory
-        fields = ['name', 'description', 'quantity', 'category']
+        fields = ['id', 'name', 'description', 'quantity', 'category']
 
 class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         models = Reviews
-        fields = ['name', 'date', 'number_rating', 'comment']
+        fields = ['id', 'name', 'date', 'number_rating', 'comment']
