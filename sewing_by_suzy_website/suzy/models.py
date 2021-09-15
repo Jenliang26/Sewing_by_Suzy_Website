@@ -8,10 +8,10 @@ class User(models.Model):
     role = models.CharField(max_length=50)
 
 class Customer(models.Model):
-    user = models.ForeignKey('accounts.User', blank=True, null=True, on_delete=models.PROTECT)
+    user = models.ForeignKey('User', blank=True, null=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
-    phone_number = models.IntegerField(null = True)
-    email = models.EmailField(max_length=254)
+    phone_number = models.CharField(max_length=12)
+    email = models.EmailField(max_length=50)
 
 class Inventory(models.Model):
     name = models.CharField(max_length=50)
@@ -26,13 +26,13 @@ class Reviews(models.Model):
     comment = models.CharField(max_length=500)
 
 class Orders(models.Model):
-    customer = models.ForeignKey('')???
+    customer = models.ForeignKey('Customer', blank=True, null=True, on_delete=models.PROTECT)
     date = models.DateField(null=True)
     notes = models.CharField(max_length=500)
-    status = ???
+    status = models.IntegerField('') #make it like the rating? 1,2,3?
 
 class Garment(models.Model):
-    order = models.ForeignKey('')???
+    order = models.ForeignKey('Order', blank=True, null=True, on_delete=models.PROTECT)
     type = models.CharField(max_length=50)
     quantity = models.IntegerField(null = True)
 
