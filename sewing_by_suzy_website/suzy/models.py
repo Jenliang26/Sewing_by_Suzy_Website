@@ -24,7 +24,7 @@ class Statuses(models.Model):
     status = models.CharField(max_length=80)
 
 class Garment(models.Model):
-    order = models.ForeignKey('Order', blank=True, null=True, on_delete=models.PROTECT)
+    order = models.ForeignKey('Orders', blank=True, null=True, on_delete=models.PROTECT)
     type = models.CharField(max_length=50)
     quantity = models.IntegerField(null = True)
 
