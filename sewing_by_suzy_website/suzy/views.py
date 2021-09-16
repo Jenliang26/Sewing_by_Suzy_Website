@@ -35,6 +35,17 @@ class CreateEmployee(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class Login(APIView):
+
+    def post(self, request):
+
+        try:
+            log_in_user = User.objects.get(user=user)
+            context = {
+                'logged_in_user': logged_in_customer
+            }
+        except: 
+
 class DisplayCustomer(APIView):
 
     def get_customer(self, pk):
@@ -48,4 +59,12 @@ class DisplayCustomer(APIView):
         serializer = CustomerSerializer(customer)
         return Response(serializer.data)
 
-        
+    def put(self, request, pk):
+        customer = self.get_customer(pk)
+        serializer = CustomerSerializer(customer, data=request.data)
+        if serializer.is_valid():
+            serializer.update(customer, request.data)
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
