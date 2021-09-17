@@ -4,9 +4,6 @@ from rest_framework import serializers
 from .models import User, Customer, Orders, Statuses, Garment, Inventory, Reviews
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'name', 'role']
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
