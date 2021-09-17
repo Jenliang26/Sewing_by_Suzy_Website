@@ -23,11 +23,6 @@ class GarmentSerializer(serializers.ModelSerializer):
         models = Garment
         fields = ['id', 'order', 'type', 'quantity']
 
-class InventorySerializer(serializers.ModelSerializer):
-    class Meta:
-        models = Inventory
-        fields = ['id', 'name', 'description', 'quantity', 'category']
-
 class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         models = Reviews
