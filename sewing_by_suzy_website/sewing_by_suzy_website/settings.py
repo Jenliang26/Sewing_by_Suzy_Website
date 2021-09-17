@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
-    'suzy'
+    'accounts.apps.AccountsConfig',
+    'inventory.apps.InventoryConfig',
+    'orders.apps.OrdersConfig',
+    'reviews.apps.ReviewsConfig'
 ]
 
 MIDDLEWARE = [
