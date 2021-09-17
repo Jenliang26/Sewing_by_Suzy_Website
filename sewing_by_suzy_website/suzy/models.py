@@ -1,18 +1,9 @@
 from django.db import models
 from django.db.models.expressions import Value
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
-
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    role = models.CharField(max_length=50)
-
-class Customer(models.Model):
-    user = models.ForeignKey('User', blank=True, null=True, on_delete=models.PROTECT)
-    name = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=12)
-    email = models.EmailField(max_length=50)
 
 class Orders(models.Model):
     customer = models.ForeignKey('Customer', blank=True, null=True, on_delete=models.PROTECT)
