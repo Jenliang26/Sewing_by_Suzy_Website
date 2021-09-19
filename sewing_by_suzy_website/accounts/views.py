@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import Customer, Employee
 from .serializers import EmployeeSerializer, CustomerSerializer
 from django.contrib.auth.models import User
+from django.http import Http404
+
 
 
 # Create your views here.
@@ -26,6 +28,28 @@ class EmployeeList(APIView):
         employees = Employee.objects.all()
         serializer = EmployeeSerializer(employees, many=True)
         return Response(serializer.data)
+
+class DisplayCustomer(APIView):
+
+    def get_customer(self, pk):
+        try:
+            return Customer.objects.get(pk=pk)
+        except Customer.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        customer = self.get_customer(pk)
+        serializer = CustomerSerializer(customer)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        customer = self.get_customer(pk)
+        serializer = CustomerSerializer(customer, data=request.data)
+        if serializer.is_valid():
+            serializer.update(customer, request.data)
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
