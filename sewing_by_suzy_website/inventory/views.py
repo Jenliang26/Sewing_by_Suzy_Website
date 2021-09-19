@@ -12,7 +12,7 @@ from django.http import Http404
 
 
 # Create your views here.
-class InventoryList (APIView):
+class InventoryList(APIView):
 
     def get(self, request):
         inventory = Inventory.objects.all()
@@ -38,6 +38,13 @@ class InventoryDetail(APIView):
         inventory = self.get_inventory(pk)
         serializer = InventorySerializer(inventory)
         return Response(serializer.data)
+
+    def post(self,request, pk):
+        serializer = InventorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk):
         inventory = self.get_inventory(pk)

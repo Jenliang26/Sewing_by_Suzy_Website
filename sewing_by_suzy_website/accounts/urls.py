@@ -3,5 +3,5 @@ from accounts import views
 
 urlpatterns = [
     path('', views.CustomerList.as_view()),
-    path('', views.EmployeeList.as_view())
+    path('/employee', views.EmployeeList.as_view())
 ]
