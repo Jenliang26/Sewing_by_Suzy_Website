@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from .models import Orders, Garment
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, GarmentSerializer
 from django.contrib.auth.models import User
 from django.http import Http404
 
 # Create your views here.
-class OrderList(APIView):
+class OrderView(APIView):
 
     def get(self, request):
         order = Orders.objects.all()
@@ -43,27 +43,31 @@ class OrderDetail(APIView):
         serializer = OrderSerializer(order, data=request.data)
         if serializer.is_valid():
             serializer.update(order, request.data)
-            serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self,request, pk):
-        serializer = OrderSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def delete(self, request, pk):
-        order = self.get_inventory(pk)
+        order = self.get_orders(pk)
         serializer = OrderSerializer(order)
         order.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class GarmentList(APIView):
+
+    def post(self,request):
+        serializer = GarmentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     def get_garments(self, orderpk):
         try:
             return Garment.objects.filter(order=orderpk)
         except Garment.DoesNotExist:
             raise Http404
+
+    def get(self, request, orderpk):
+        garment = self.get_garments(orderpk)
+        serializer = GarmentSerializer(garment, many=True)
+        return Response(serializer.data)

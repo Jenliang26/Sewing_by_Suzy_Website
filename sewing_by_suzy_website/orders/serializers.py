@@ -1,12 +1,14 @@
 from rest_framework import serializers
 from .models import Orders, Garment
 
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Orders
-        fields = ['id', 'customer', 'date', 'notes', 'status']
+        model = Orders
+        fields = ['customer', 'date', 'notes', 'status']
 
 class GarmentSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Garment
-        fields = ['id', 'order', 'type', 'quantity']
+        model = Garment
+        fields = ['order', 'type', 'quantity']
+        
