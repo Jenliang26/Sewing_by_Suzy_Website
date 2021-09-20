@@ -1,4 +1,4 @@
-from sewing_by_suzy_website.accounts.models import Customer
+from accounts.models import Customer
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
@@ -12,7 +12,7 @@ class RegisterCustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'phone_number')
+        fields = ('username', 'password', 'email', 'first_name', 'last_name')
 
     def create(self, validated_data):
         new_user = User.objects.create(
@@ -24,15 +24,8 @@ class RegisterCustomerSerializer(serializers.ModelSerializer):
     
         new_user.set_password(validated_data['password'])
         new_user.save()
-        userpk = User.objets.get(username=new_user.username).id
-        customer = Customer.objects.create(
-           user = userpk,
-           name = new_user.first_name,
-           phone_number = validated_data['phone_number']
-        )
-        customer.save()
 
-        return new_user, customer
+        return new_user
 
 class RegisterEmployeeSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[

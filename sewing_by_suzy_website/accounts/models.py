@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=12)
+    phone_number = models.CharField(max_length=12, null=True)
 
 class Employee(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT)
