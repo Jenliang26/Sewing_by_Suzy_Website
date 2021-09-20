@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'reviews.apps.ReviewsConfig',
     'rest_framework_simplejwt',
-    'corsheader'
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
