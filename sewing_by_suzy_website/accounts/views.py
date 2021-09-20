@@ -25,6 +25,8 @@ class Customers(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class Customer_Query(APIView):
+
     def get_customer(self, pk):
         try:
             return Customer.objects.get(pk=pk)
@@ -72,6 +74,8 @@ class Employees(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class Employee_Query(APIView):
+
     def get_employee(self, pk):
         try:
             return Employee.objects.get(pk=pk)
@@ -104,6 +108,8 @@ class Employee_By_User(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
         
 
 

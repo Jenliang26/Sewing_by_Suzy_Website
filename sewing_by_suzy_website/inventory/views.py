@@ -12,8 +12,8 @@ from django.http import Http404
 
 
 # Create your views here.
-class InventoryList(APIView):
-
+class InventoryView(APIView):
+    
     def get(self, request):
         inventory = Inventory.objects.all()
         serializer = InventorySerializer(inventory, many=True)
@@ -26,28 +26,21 @@ class InventoryList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class InventoryDetail(APIView):
+class Item_Query(APIView):
 
-    def get_inventory(self, pk):
+    def get_inventorys(self, pk):
         try:
             return Inventory.objects.get(pk=pk)
         except Inventory.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):
-        inventory = self.get_inventory(pk)
+        inventory = self.get_inventorys(pk)
         serializer = InventorySerializer(inventory)
         return Response(serializer.data)
 
-    def post(self,request, pk):
-        serializer = InventorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def put(self, request, pk):
-        inventory = self.get_inventory(pk)
+        inventory = self.get_inventorys(pk)
         serializer = InventorySerializer(inventory, data=request.data)
         if serializer.is_valid():
             serializer.update(inventory, request.data)
@@ -56,7 +49,8 @@ class InventoryDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        inventory = self.get_inventory(pk)
+        inventory = self.get_inventorys(pk)
         serializer = InventorySerializer(inventory)
         inventory.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
