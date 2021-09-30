@@ -17,14 +17,19 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 class UserProfile(APIView):
-    def get_user(self, pk):
+    def get_user(self, uid):
         try:
-            return User.objects.get(pk=pk)
+            return User.objects.filter(pk=uid)[0]
         except User.DoesNotExist:
             raise Http404
+    
+    def get(self, request, uid):
+        user = self.get_user(uid)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
-    def put(self, request, pk):
-        user = self.get_user(pk)
+    def put(self, request, uid):
+        user = self.get_user(uid)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.update(user, request.data)
