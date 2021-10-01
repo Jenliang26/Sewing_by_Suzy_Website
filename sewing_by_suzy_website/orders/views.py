@@ -71,3 +71,16 @@ class GarmentList(APIView):
         garment = self.get_garments(orderpk)
         serializer = GarmentSerializer(garment, many=True)
         return Response(serializer.data)
+
+class CustomerOrders(APIView):
+
+    def get_orders(self, customerid):
+        try:
+            return Orders.objects.filter(customer=customerid)
+        except Orders.DoesNotExist:
+            raise Http404
+
+    def get(self, request, customerid):
+        order = self.get_orders(customerid)
+        serializer = OrderSerializer(order, many=True)
+        return Response(serializer.data)
