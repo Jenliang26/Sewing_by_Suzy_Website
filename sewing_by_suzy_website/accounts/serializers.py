@@ -4,7 +4,7 @@ from .models import Customer, Employee
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Customer
-        fields = ['user', 'name', 'phone_number'] 
+        fields = ['id', 'user', 'name', 'phone_number'] 
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta: 
