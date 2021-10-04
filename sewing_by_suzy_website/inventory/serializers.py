@@ -4,4 +4,4 @@ from .models import Inventory
 class InventorySerializer(serializers.ModelSerializer):
     class Meta:
         model= Inventory
-        fields = ['name', 'description', 'quantity', 'category']
+        fields = ['id', 'name', 'description', 'quantity', 'category']
