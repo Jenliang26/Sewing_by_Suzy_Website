@@ -27,11 +27,6 @@ class OrderView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class OrderDetail(APIView):
-    account_sid = 'AC2fb817a44166d0638f4ab6295b624808'
-
-    auth_token = 'e7417177a79c335def0f71aee8697a71'
-
-    client = Client(account_sid, auth_token)
 
     def get_orders(self, pk):
         try:
@@ -46,7 +41,7 @@ class OrderDetail(APIView):
 
     def put(self, request, pk):
         order = self.get_orders(pk)
-        self.sendsms(order, request.data)
+        # self.sendsms(order, request.data)
         serializer = OrderSerializer(order, data=request.data)
         if serializer.is_valid():
             serializer.update(order, request.data)
@@ -60,7 +55,10 @@ class OrderDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def sendsms(self, order, neworder):
-        message = self.client.messages.create(
+        account_sid = 'AC2fb817a44166d0638f4ab6295b624808'
+        auth_token = '6aab9028271cd65c255fb028b3b98b9f'
+        client = Client(account_sid, auth_token)
+        message = client.messages.create(
             body = "Your new order status has been changed from Sewing By Suzy.",
             from_ = "+13344234248",
             to = "+14147920957"
